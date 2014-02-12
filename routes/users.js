@@ -74,7 +74,35 @@ exports.updateUser = function(req, res) {
         });
     });
 }
+
+exports.login = function(req, res) {
+console.log("inside login function");
+var user_email = req.body['email'];
+var user_pass = req.body['password'];
+db.collection('users', function(err, collection) {
+    collection.find({email:user_email, password:user_pass}).toArray(function(err, items) {
+        
+        if (err) {
+            console.log("I am here");
+            res.send({'error':'An error has occurred'});
+        } else {
+         _authenticate_email = user_email;
+            res.send(items);
+        }
+    });
+});
+};
+
+exports.loggedin = function(req, res) {
+ console.log("inside login function");
+ var user_email = req.body['email'];
+ if (_authenticate_email == user_email)
+  {
+   res.send(user_email);
+  }
  
+};
+
 exports.deleteUser = function(req, res) {
     var id = req.params.id;
     console.log('Deleting user: ' + id);

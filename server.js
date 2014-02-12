@@ -26,7 +26,7 @@ app.all('/*', function(req, res, next) {
 app.get('/users', user.findAll);
 app.get('/users/:id', user.findById);
 app.post('/users', user.addUser);
-app.post('/upload', user.upload);
+// app.post('/upload', user.upload);
 app.put('/users/:id', user.updateUser);
 app.post('/user_login',user.login);
 app['delete']('/users/:id', user.deleteUser);
