@@ -6,8 +6,10 @@ var Server = mongo.Server,
  
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 db = new Db('resumedb', server);
+_authenticate_email = "";
  
 db.open(function(err, db) {
+    
     if(!err) {
     	console.log("Here");
         console.log("Connected to 'resumedb' database");
@@ -39,11 +41,13 @@ exports.findAll = function(req, res) {
 };
  
 exports.addUser = function(req, res) {
+    console.log("In add user");
     var user = req.body;
     console.log('Adding user: ' + JSON.stringify(user));
     db.collection('users', function(err, collection) {
         collection.insert(user, {safe:true}, function(err, result) {
             if (err) {
+                console.log("I am here");
                 res.send({'error':'An error has occurred'});
             } else {
                 console.log('Success: ' + JSON.stringify(result[0]));
