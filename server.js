@@ -29,6 +29,7 @@ app.post('/users', user.addUser);
 // app.post('/upload', user.upload);
 app.put('/users/:id', user.updateUser);
 app.post('/user_login',user.login);
+app.post('/validate_email',user.validateemail);
 app['delete']('/users/:id', user.deleteUser);
  
 app.listen(3000);

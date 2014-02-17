@@ -93,6 +93,24 @@ db.collection('users', function(err, collection) {
 });
 };
 
+exports.validateemail = function(req, res) {
+console.log("inside register function");
+var user_email = req.body['email'];
+db.collection('users', function(err, collection) {
+    collection.find({email:user_email}).toArray(function(err, items) {
+        
+        if (err) {
+            console.log("I am here");
+            res.send({'error':'An error has occurred'});
+        } else {
+		console.log("User matched");
+         _authenticate_email = user_email;
+            res.send(items);
+        }
+    });
+});
+};
+
 exports.loggedin = function(req, res) {
  console.log("inside login function");
  var user_email = req.body['email'];
