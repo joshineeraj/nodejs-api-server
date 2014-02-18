@@ -94,21 +94,20 @@ db.collection('users', function(err, collection) {
 };
 
 exports.validateemail = function(req, res) {
-console.log("inside register function");
-var user_email = req.body['email'];
-db.collection('users', function(err, collection) {
-    collection.find({email:user_email}).toArray(function(err, items) {
-        
-        if (err) {
-            console.log("I am here");
-            res.send({'error':'An error has occurred'});
-        } else {
-		console.log("User matched");
-         _authenticate_email = user_email;
-            res.send(items);
-        }
-    });
-});
+	console.log("inside validate email function");
+	var user_email = req.body['email'];
+	db.collection('users', function(err, collection) {
+		collection.findOne({'email':user_email}, function(err, item) {
+			if ((item == null) || err) {
+				console.log("New email");
+	            res.send({'error':'An error has occurred'});
+			}else{
+				console.log("Existing email");
+				console.log(item);
+				res.send(item);
+			}
+        });
+	});
 };
 
 exports.loggedin = function(req, res) {
