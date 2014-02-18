@@ -98,9 +98,9 @@ exports.validateemail = function(req, res) {
 	var user_email = req.body['email'];
 	db.collection('users', function(err, collection) {
 		collection.findOne({'email':user_email}, function(err, item) {
-			if ((item == null) || err) {
+			if (item == null) {
 				console.log("New email");
-	            res.send({'error':'An error has occurred'});
+	            res.send({'success':'Welcome'});
 			}else{
 				console.log("Existing email");
 				console.log(item);
