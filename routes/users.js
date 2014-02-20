@@ -76,21 +76,23 @@ exports.updateUser = function(req, res) {
 }
 
 exports.login = function(req, res) {
-console.log("inside login function");
-var user_email = req.body['email'];
-var user_pass = req.body['password'];
-db.collection('users', function(err, collection) {
-    collection.find({email:user_email, password:user_pass}).toArray(function(err, items) {
-        
-        if (err) {
-            console.log("I am here");
-            res.send({'error':'An error has occurred'});
-        } else {
-         _authenticate_email = user_email;
-            res.send(items);
-        }
-    });
-});
+	console.log("inside login function");
+	var user_email = req.body['email'];
+	var user_pass = req.body['password'];
+	db.collection('users', function(err, collection) {
+	    collection.findOne({email:user_email, password:user_pass}, function(err, item) {
+	        if (err) {
+	            console.log("I am here");
+	            res.send({'error':'An error has occurred'});
+	        } else if (item == null) {
+				console.log("Email not registered");
+	            res.send({'error':'User doesn\'t exist'});
+			}else {
+	         _authenticate_email = user_email;
+	            res.send(item);
+	        }
+	    });
+	});
 };
 
 exports.validateemail = function(req, res) {
