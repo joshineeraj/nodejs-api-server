@@ -15,7 +15,9 @@ app.configure(function () {
 	app.use(express.static(__dirname));
 });
 var whitelist_domains = ['http://resume.app', 
-                         'http://localhost:8000']
+                         'http://localhost:8000', 
+                         'http://localhost',
+                         'http://localhost:9876']
 app.all('/*', function(req, res, next) {
   if (whitelist_domains.indexOf(req.headers.origin) > -1){
 	res.header("Access-Control-Allow-Origin", req.headers.origin);
