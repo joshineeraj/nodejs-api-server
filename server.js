@@ -14,9 +14,12 @@ app.configure(function () {
 	app.use(app.router);
 	app.use(express.static(__dirname));
 });
-
+var whitelist_domains = ['http://resume.app', 
+                         'http://localhost:8000']
 app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://resume.app");
+  if (whitelist_domains.indexOf(req.headers.origin) > -1){
+	res.header("Access-Control-Allow-Origin", req.headers.origin);
+  }
   res.header('Access-Control-Allow-Credentials', true);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
